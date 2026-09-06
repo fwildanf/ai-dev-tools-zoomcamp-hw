@@ -1,0 +1,21 @@
+{% extends 'chores/base.html' %}
+
+{% block title %}{{ title }} | Household Chores{% endblock %}
+
+{% block content %}
+<section class="form-shell">
+    <p class="eyebrow">Chore planning</p>
+    <h1>{{ title }}</h1>
+    {% if not form.assignee.field.queryset.exists %}
+        <p class="notice">Add a household member before creating a chore.</p>
+    {% endif %}
+    <form method="post" class="stacked-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="form-actions">
+            <button class="button" type="submit">Save chore</button>
+            <a href="{% url 'chores:index' %}">Cancel</a>
+        </div>
+    </form>
+</section>
+{% endblock %}

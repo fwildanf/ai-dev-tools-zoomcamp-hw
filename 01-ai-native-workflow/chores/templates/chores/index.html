@@ -1,0 +1,89 @@
+{% extends 'chores/base.html' %}
+
+{% block title %}Dashboard | Household Chores{% endblock %}
+
+{% block content %}
+<section class="page-heading">
+    <div>
+        <p class="eyebrow">Shared household</p>
+        <h1>Chore dashboard</h1>
+        <p class="lede">See what needs doing and how the work is distributed.</p>
+    </div>
+    <a class="button" href="{% url 'chores:member_create' %}">Add member</a>
+</section>
+
+<section class="workload-grid" aria-label="Workload by member">
+    {% for member in members %}
+        <article class="workload-card">
+            <div class="card-heading">
+                <h2>{{ member.name }}</h2>
+                <span class="count">{{ member.chores.count }}</span>
+            </div>
+            {% for member_chore in member.chores.all %}
+                <p class="mini-chore {% if member_chore.completed %}muted{% endif %}">
+                    {{ member_chore.name }}{% if member_chore.completed %} <span>done</span>{% endif %}
+                </p>
+            {% empty %}
+                <p class="muted">No chores assigned.</p>
+            {% endfor %}
+            <div class="card-actions">
+                <a href="{% url 'chores:member_edit' member.pk %}">Rename</a>
+                <a href="{% url 'chores:member_delete' member.pk %}">Remove</a>
+            </div>
+        </article>
+    {% empty %}
+        <article class="empty-state">
+            <h2>Add your household members</h2>
+            <p>Start by adding the people who will share the chores.</p>
+            <a class="button" href="{% url 'chores:member_create' %}">Add first member</a>
+        </article>
+    {% endfor %}
+</section>
+
+<section class="section-heading">
+    <div>
+        <p class="eyebrow">All work</p>
+        <h2>Chores</h2>
+    </div>
+    <form method="get" class="filter-form">
+        <label for="assignee">Filter by person</label>
+        <select id="assignee" name="assignee" onchange="this.form.submit()">
+            <option value="">Everyone</option>
+            {% for member in members %}
+                <option value="{{ member.pk }}" {% if selected_assignee == member.pk|stringformat:'s' %}selected{% endif %}>{{ member.name }}</option>
+            {% endfor %}
+        </select>
+    </form>
+</section>
+
+<section class="chore-list">
+    {% for chore in chores %}
+        <article class="chore-row {% if chore.completed %}is-complete{% endif %}">
+            <div class="chore-main">
+                <div class="chore-title-line">
+                    <h3>{{ chore.name }}</h3>
+                    {% if chore.completed %}<span class="status status-done">Completed</span>{% elif chore.is_overdue %}<span class="status status-overdue">Overdue</span>{% else %}<span class="status">Open</span>{% endif %}
+                </div>
+                <p>{{ chore.assignee.name }} &middot; {{ chore.due_date|date:'M j, Y' }} &middot; {{ chore.get_frequency_display }}</p>
+                {% if chore.completed %}<p class="muted">Completed {{ chore.completed_at|date:'M j, Y, g:i a' }}</p>{% endif %}
+            </div>
+            <div class="row-actions">
+                {% if not chore.completed %}
+                    <form method="post" action="{% url 'chores:chore_complete' chore.pk %}">
+                        {% csrf_token %}
+                        <button class="button button-small" type="submit">Mark done</button>
+                    </form>
+                {% endif %}
+                <a href="{% url 'chores:chore_edit' chore.pk %}">Edit</a>
+                <a href="{% url 'chores:chore_delete' chore.pk %}">Delete</a>
+            </div>
+        </article>
+    {% empty %}
+        <article class="empty-state">
+            <h2>No chores yet</h2>
+            <p>Create a chore to start building the household rotation.</p>
+            <a class="button" href="{% url 'chores:chore_create' %}">Create a chore</a>
+        </article>
+    {% endfor %}
+</section>
+{% endblock %}

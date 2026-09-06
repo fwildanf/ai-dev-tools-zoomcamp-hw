@@ -1,0 +1,16 @@
+{% extends 'chores/base.html' %}
+
+{% block title %}Remove {{ object_type }} | Household Chores{% endblock %}
+
+{% block content %}
+<section class="form-shell">
+    <p class="eyebrow">Confirm removal</p>
+    <h1>Remove {{ object_type }}?</h1>
+    <p>This will permanently remove <strong>{{ object }}</strong>.</p>
+    <form method="post" class="form-actions">
+        {% csrf_token %}
+        <button class="button button-danger" type="submit">Remove</button>
+        <a href="{% url cancel_url %}">Cancel</a>
+    </form>
+</section>
+{% endblock %}
