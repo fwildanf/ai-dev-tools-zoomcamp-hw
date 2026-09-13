@@ -1,66 +1,33 @@
 # AI Dev Tools Zoomcamp Homework
 
+Homework projects for the [AI Dev Tools Zoomcamp](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp). Each numbered folder is a separate app.
+
 ## Projects
 
-### `01-ai-native-workflow` - Shared Household Chores
+| Folder | App | Status |
+| --- | --- | --- |
+| [01-ai-native-workflow](01-ai-native-workflow) | Shared household chores | Implemented |
+| [02-development](02-development) | Premier League scoreboard | Specs only |
 
-The `01-ai-native-workflow` project is a local Django web app for managing shared household chores. It supports up to five household members, recurring chores, automatic assignment rotation, completion history, overdue labels, and workload filtering.
+### 01 — Shared Household Chores
 
-#### Features
+Local Django app for household members, recurring chores, assignment rotation, completion history, and workload.
 
-- Add, rename, and remove household members
-- Create predefined or custom chores
-- Assign one member to each chore
-- Schedule one-time, daily, weekly, or monthly chores
-- Rotate recurring assignments automatically
-- Mark chores complete and preserve completion history
-- Identify overdue chores
-- View workload by member and filter the chore list
+See [01-ai-native-workflow/README.md](01-ai-native-workflow/README.md).
 
-#### Technology
+### 02 — Premier League Scoreboard
 
-- Python 3.14+
-- Django 5.2
-- SQLite for local persistence
-- `uv` for dependency management
+Current-season Premier League table plus this week's results and fixtures, loaded from football-data.org on page load.
 
-#### Setup
+See [02-development/README.md](02-development/README.md) and [specs](02-development/_docs/specs.md).
 
-From the project directory:
+## Layout
 
-```bash
-cd 01-ai-native-workflow
-uv sync
-uv run python manage.py migrate
+```
+.
+├── 01-ai-native-workflow/   # Django chores app
+├── 02-development/          # Premier League scoreboard
+└── README.md
 ```
 
-#### Run the Development Server
-
-```bash
-uv run python manage.py runserver
-```
-
-Open the chores app at <http://127.0.0.1:8000/chores/>.
-
-#### Run Tests
-
-Run all Django tests:
-
-```bash
-uv run python manage.py test
-```
-
-Run only the chores app tests:
-
-```bash
-uv run python manage.py test chores
-```
-
-#### Project Documentation
-
-- [Product plan](01-ai-native-workflow/_docs/plan.md)
-- [Django backlog](01-ai-native-workflow/_docs/backlog.md)
-
-#### MVP Boundaries
-
-The current version has no user accounts, notifications, rewards, chore swapping, or external production database. It is intended for local household use with shared access and a local SQLite database.
+Each project has its own dependencies and docs. Run setup from inside that project folder.
