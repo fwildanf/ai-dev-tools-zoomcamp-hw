@@ -4,10 +4,11 @@ Follow [_docs/specs.md](_docs/specs.md). Do not expand the MVP unless the user a
 
 ## Stack
 
-- Django project: `pl_scoreboard`, same shape as `01-ai-native-workflow`
-- Python 3.14+, Django 5.2, `uv`, SQLite
+- FastAPI backend in `backend/`, project name `pl_scoreboard`
+- Python 3.14+, `uv`, mock in-memory database (replace later)
+- Contract: [openapi.yaml](openapi.yaml)
 - Work only inside `02-development/`
-- Frontend lives in `frontent/`; all backend access goes through `frontent/js/api.js` (mocked until Django exists)
+- Frontend lives in `frontent/`; all backend access goes through `frontent/js/api.js`
 
 ## Product
 
@@ -19,11 +20,13 @@ Follow [_docs/specs.md](_docs/specs.md). Do not expand the MVP unless the user a
 
 ## API
 
-- football-data.org, competition `PL`
-- Token in `.env` as `FOOTBALL_DATA_API_TOKEN`; never commit `.env`
-- Cache API responses; do not call the live API from tests — mock responses instead
+- Contract: [openapi.yaml](openapi.yaml)
+- Mock in-memory database in `backend/db.py` (replace later)
+- Tests must use the mock store and must not call football-data.org
+- Later: football-data.org (`PL`), token in `.env` as `FOOTBALL_DATA_API_TOKEN`
 
 ## Docs
 
 - Humans: [README.md](README.md)
 - Scope: [_docs/specs.md](_docs/specs.md)
+- API: [openapi.yaml](openapi.yaml)

@@ -1,0 +1,172 @@
+openapi: 3.1.0
+info:
+  title: Premier League Scoreboard API
+  version: 0.1.0
+  description: Current-season Premier League table and this week's matches.
+servers:
+  - url: http://127.0.0.1:8000
+    description: Local development
+paths:
+  /health:
+    get:
+      operationId: getHealth
+      summary: Liveness check
+      responses:
+        "200":
+          description: Service is up
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Health"
+  /api/scoreboard:
+    get:
+      operationId: getScoreboard
+      summary: Current table and this week's matches
+      responses:
+        "200":
+          description: Scoreboard snapshot
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Scoreboard"
+  /api/matches/{matchId}:
+    get:
+      operationId: getMatch
+      summary: One match from this week's list
+      parameters:
+        - name: matchId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Match found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Match"
+        "404":
+          description: Match not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    Health:
+      type: object
+      additionalProperties: false
+      required: [status]
+      properties:
+        status:
+          type: string
+          enum: [ok]
+    Scoreboard:
+      type: object
+      additionalProperties: false
+      required:
+        - season
+        - matchweek
+        - competition
+        - standings
+        - matches
+      properties:
+        season:
+          type: string
+          example: "2026/27"
+        matchweek:
+          type: integer
+          minimum: 1
+        competition:
+          type: string
+          example: Premier League
+        standings:
+          type: array
+          items:
+            $ref: "#/components/schemas/Standing"
+        matches:
+          type: array
+          items:
+            $ref: "#/components/schemas/Match"
+    Standing:
+      type: object
+      additionalProperties: false
+      required:
+        - position
+        - club
+        - played
+        - won
+        - drawn
+        - lost
+        - goalsFor
+        - goalsAgainst
+        - goalDifference
+        - points
+      properties:
+        position:
+          type: integer
+          minimum: 1
+          maximum: 20
+        club:
+          type: string
+        played:
+          type: integer
+          minimum: 0
+        won:
+          type: integer
+          minimum: 0
+        drawn:
+          type: integer
+          minimum: 0
+        lost:
+          type: integer
+          minimum: 0
+        goalsFor:
+          type: integer
+          minimum: 0
+        goalsAgainst:
+          type: integer
+          minimum: 0
+        goalDifference:
+          type: integer
+        points:
+          type: integer
+          minimum: 0
+    Match:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - utcKickoff
+        - status
+        - home
+        - away
+        - homeScore
+        - awayScore
+      properties:
+        id:
+          type: string
+        utcKickoff:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum: [FINISHED, SCHEDULED]
+        home:
+          type: string
+        away:
+          type: string
+        homeScore:
+          type: [integer, "null"]
+          minimum: 0
+        awayScore:
+          type: [integer, "null"]
+          minimum: 0
+    Error:
+      type: object
+      additionalProperties: false
+      required: [detail]
+      properties:
+        detail:
+          type: string

@@ -29,11 +29,12 @@ Build a simple tool that shows the current Premier League table and this week's 
 
 ## Platform and Storage
 
-- Django project name: `pl_scoreboard`
-- Local, mobile-friendly Django web app
-- Live football API (football-data.org, competition `PL`)
+- App name: `pl_scoreboard`; FastAPI app in `backend/`
+- Local, mobile-friendly web app
+- OpenAPI contract in `openapi.yaml`
+- Mock in-memory database for now (replace later)
+- Live football API (football-data.org, competition `PL`) later
 - API key stored in `.env`, not committed
-- SQLite cache managed by Django
 
 ## Out of Scope for the MVP
 
