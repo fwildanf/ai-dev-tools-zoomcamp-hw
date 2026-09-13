@@ -5,7 +5,8 @@ Follow [_docs/specs.md](_docs/specs.md). Do not expand the MVP unless the user a
 ## Stack
 
 - FastAPI backend in `backend/`, project name `pl_scoreboard`
-- Python 3.14+, `uv`, mock in-memory database (replace later)
+- Python 3.14+, `uv`, SQLAlchemy (database-agnostic; default SQLite)
+- Set `DATABASE_URL` to switch engines (e.g. PostgreSQL later)
 - Contract: [openapi.yaml](openapi.yaml)
 - Work only inside `02-development/`
 - Frontend lives in `frontent/`; all backend access goes through `frontent/js/api.js` (`GET /api/scoreboard` and `GET /api/matches/{id}`)
@@ -22,8 +23,8 @@ Follow [_docs/specs.md](_docs/specs.md). Do not expand the MVP unless the user a
 ## API
 
 - Contract: [openapi.yaml](openapi.yaml)
-- Mock in-memory database in `backend/db.py` (replace later)
-- Tests must use the mock store and must not call football-data.org
+- SQLAlchemy repository in `backend/repository.py`; engine from `DATABASE_URL`
+- Tests use an isolated SQLite file and must not call football-data.org
 - Later: football-data.org (`PL`), token in `.env` as `FOOTBALL_DATA_API_TOKEN`
 
 ## Docs

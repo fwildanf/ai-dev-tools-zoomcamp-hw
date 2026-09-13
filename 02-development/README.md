@@ -22,7 +22,7 @@ The page loads standings and matches with `GET /api/scoreboard`. Match details u
 
 If you serve the static files on another port, `frontent/js/api.js` falls back to `http://127.0.0.1:8000`.
 
-Contract: [openapi.yaml](openapi.yaml). Data comes from [backend/db.py](backend/db.py) (mock database).
+Contract: [openapi.yaml](openapi.yaml). Data is stored with SQLAlchemy (`backend/repository.py`). Default database is SQLite (`pl_scoreboard.db`); set `DATABASE_URL` to use another engine.
 
 ## Tests
 
@@ -30,7 +30,7 @@ Contract: [openapi.yaml](openapi.yaml). Data comes from [backend/db.py](backend/
 uv run pytest
 ```
 
-Tests use the mock database and do not call football-data.org.
+Tests use an isolated SQLite database and do not call football-data.org.
 
 ## Features
 
@@ -45,7 +45,7 @@ Tests use the mock database and do not call football-data.org.
 - Python 3.14+
 - FastAPI
 - `uv`
-- In-memory mock database (replace later)
+- SQLAlchemy (SQLite by default; any SQLAlchemy URL via `DATABASE_URL`)
 
 ## Project Documentation
 

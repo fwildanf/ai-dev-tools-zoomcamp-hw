@@ -1,18 +1,30 @@
+from contextlib import asynccontextmanager
 from pathlib import Path
 
-from fastapi import FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
+from sqlalchemy.orm import Session
 
-from backend import db
+from backend.database import get_session, init_db
+from backend.repository import get_match as fetch_match
+from backend.repository import get_scoreboard as fetch_scoreboard
 from backend.schemas import Error, Health, Match, Scoreboard
 
 FRONTENT_DIR = Path(__file__).resolve().parent.parent / "frontent"
 
+
+@asynccontextmanager
+async def lifespan(_app: FastAPI):
+    init_db()
+    yield
+
+
 app = FastAPI(
     title="Premier League Scoreboard API",
     version="0.1.0",
+    lifespan=lifespan,
 )
 
 app.add_middleware(
@@ -29,8 +41,8 @@ def get_health() -> Health:
 
 
 @app.get("/api/scoreboard", response_model=Scoreboard)
-def get_scoreboard() -> Scoreboard:
-    return Scoreboard.model_validate(db.get_scoreboard())
+def get_scoreboard(session: Session = Depends(get_session)) -> Scoreboard:
+    return Scoreboard.model_validate(fetch_scoreboard(session))
 
 
 @app.get(
@@ -38,8 +50,8 @@ def get_scoreboard() -> Scoreboard:
     response_model=Match,
     responses={404: {"model": Error}},
 )
-def get_match(match_id: str) -> Match:
-    match = db.get_match(match_id)
+def get_match(match_id: str, session: Session = Depends(get_session)) -> Match:
+    match = fetch_match(session, match_id)
     if match is None:
         raise HTTPException(status_code=404, detail="Match not found")
     return Match.model_validate(match)

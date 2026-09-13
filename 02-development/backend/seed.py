@@ -1,8 +1,6 @@
-"""In-memory scoreboard store. Replace with a real database later."""
+"""Initial scoreboard snapshot used to seed an empty database."""
 
-from copy import deepcopy
-
-_SCOREBOARD = {
+SNAPSHOT = {
     "season": "2026/27",
     "matchweek": 4,
     "competition": "Premier League",
@@ -41,14 +39,3 @@ _SCOREBOARD = {
         {"id": "mw4-10", "utcKickoff": "2026-09-14T18:00:00Z", "status": "SCHEDULED", "home": "Wolverhampton Wanderers", "away": "Sunderland", "homeScore": None, "awayScore": None},
     ],
 }
-
-
-def get_scoreboard() -> dict:
-    return deepcopy(_SCOREBOARD)
-
-
-def get_match(match_id: str) -> dict | None:
-    for match in _SCOREBOARD["matches"]:
-        if match["id"] == match_id:
-            return deepcopy(match)
-    return None
