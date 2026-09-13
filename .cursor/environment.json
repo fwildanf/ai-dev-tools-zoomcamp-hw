@@ -1,0 +1,16 @@
+{
+  "name": "AI Dev Tools Zoomcamp HW",
+  "install": "bash .cursor/install.sh",
+  "terminals": [
+    {
+      "name": "django-server",
+      "command": "export PATH=\"$HOME/.local/bin:$PATH\"; cd 01-ai-native-workflow && uv run python manage.py runserver 0.0.0.0:8000"
+    }
+  ],
+  "ports": [
+    {
+      "name": "django web server",
+      "port": 8000
+    }
+  ]
+}
