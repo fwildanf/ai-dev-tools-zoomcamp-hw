@@ -219,3 +219,11 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Extra local env files (API tokens). Keep .env.example if added later.
+.env.*
+!.env.example

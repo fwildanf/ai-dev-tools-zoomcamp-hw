@@ -7,7 +7,7 @@ Homework projects for the [AI Dev Tools Zoomcamp](https://github.com/DataTalksCl
 | Folder | App | Status |
 | --- | --- | --- |
 | [01-ai-native-workflow](01-ai-native-workflow) | Shared household chores | Implemented |
-| [02-development](02-development) | `pl_scoreboard` | Specs only |
+| [02-development](02-development) | `pl_scoreboard` | Frontend mocked |
 
 ### 01 — Shared Household Chores
 

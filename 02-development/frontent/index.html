@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Premier League Scoreboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/styles.css?v=2" />
+  </head>
+  <body>
+    <header class="site-header">
+      <span class="brand">pl_scoreboard</span>
+      <nav>
+        <a href="#table">Table</a>
+        <a href="#this-week">This week</a>
+      </nav>
+    </header>
+
+    <main class="container">
+      <section class="page-heading">
+        <div>
+          <p class="eyebrow">Premier League</p>
+          <h1>Scoreboard</h1>
+          <p class="lede">Current table and this week’s results and fixtures.</p>
+        </div>
+        <button class="button" id="refresh-btn" type="button">Refresh</button>
+      </section>
+
+      <p class="meta-row">
+        <span id="season-label">Season —</span>
+        <span id="matchweek-label">Matchweek —</span>
+        <span id="load-status">Loading scoreboard…</span>
+      </p>
+
+      <p class="banner" id="error-banner" hidden></p>
+
+      <div class="layout">
+        <section class="panel" id="table">
+          <h2>League table</h2>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th class="num">#</th>
+                  <th>Club</th>
+                  <th class="num">P</th>
+                  <th class="num">W</th>
+                  <th class="num">D</th>
+                  <th class="num">L</th>
+                  <th class="num">GF</th>
+                  <th class="num">GA</th>
+                  <th class="num">GD</th>
+                  <th class="num">Pts</th>
+                </tr>
+              </thead>
+              <tbody id="standings-body"></tbody>
+            </table>
+          </div>
+          <p class="legend">
+            <span><i class="swatch swatch-cl"></i> Top 4</span>
+            <span><i class="swatch swatch-rel"></i> Relegation</span>
+          </p>
+        </section>
+
+        <section class="panel" id="this-week">
+          <div class="week-block">
+            <h2>Results</h2>
+            <div class="match-list" id="results-list"></div>
+          </div>
+          <div class="week-block">
+            <h2>Upcoming</h2>
+            <div class="match-list" id="fixtures-list"></div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <dialog id="match-dialog">
+      <div id="match-dialog-body"></div>
+      <form method="dialog">
+        <button class="button" id="close-dialog" type="submit">Close</button>
+      </form>
+    </dialog>
+
+    <script type="module" src="./js/app.js?v=2"></script>
+  </body>
+</html>

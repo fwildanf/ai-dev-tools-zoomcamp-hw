@@ -4,9 +4,22 @@ Django project: `pl_scoreboard`.
 
 Local Django web app that shows the current Premier League table and this week's results and fixtures. Data comes from football-data.org on page load and is cached in SQLite.
 
-This folder currently has specs only. The app is not implemented yet.
+This folder currently has a mocked frontend only. The Django backend is not implemented yet.
 
-## Features (planned)
+## Frontend (mocked)
+
+Open [frontent/](frontent/) — a static page that loads the table and this week’s matches through one API module (`frontent/js/api.js`). Backend calls are mocked.
+
+From this directory:
+
+```bash
+cd frontent
+python3 -m http.server 8765
+```
+
+Then open <http://127.0.0.1:8765/>. A local server is required because the page uses ES modules.
+
+## Features (frontend, mocked)
 
 - Current-season league table (rank, club, played, W/D/L, GF/GA, GD, points)
 - This week's finished matches with scores
