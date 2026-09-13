@@ -4,7 +4,7 @@ Follow [_docs/specs.md](_docs/specs.md). Do not expand the MVP unless the user a
 
 ## Stack
 
-- Django web app, same shape as `01-ai-native-workflow`
+- Django project: `pl_scoreboard`, same shape as `01-ai-native-workflow`
 - Python 3.14+, Django 5.2, `uv`, SQLite
 - Work only inside `02-development/`
 

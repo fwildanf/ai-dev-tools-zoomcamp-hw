@@ -1,5 +1,7 @@
 # Premier League Scoreboard
 
+Django project: `pl_scoreboard`.
+
 Local Django web app that shows the current Premier League table and this week's results and fixtures. Data comes from football-data.org on page load and is cached in SQLite.
 
 This folder currently has specs only. The app is not implemented yet.

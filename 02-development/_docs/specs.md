@@ -1,4 +1,4 @@
-# Premier League Scoreboard
+# Premier League Scoreboard (`pl_scoreboard`)
 
 ## Purpose
 
@@ -29,6 +29,7 @@ Build a simple tool that shows the current Premier League table and this week's 
 
 ## Platform and Storage
 
+- Django project name: `pl_scoreboard`
 - Local, mobile-friendly Django web app
 - Live football API (football-data.org, competition `PL`)
 - API key stored in `.env`, not committed
