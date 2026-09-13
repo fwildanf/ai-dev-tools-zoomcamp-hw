@@ -2,24 +2,9 @@
 
 App name: `pl_scoreboard`.
 
-Shows the current Premier League table and this week's results and fixtures. The frontend still uses a local mock; the FastAPI backend serves the same snapshot from an in-memory store.
+Shows the current Premier League table and this week's results and fixtures. The FastAPI app serves the UI and the API from the same origin.
 
-## Frontend (mocked)
-
-Open [frontent/](frontent/) — a static page that loads the table and this week's matches through `frontent/js/api.js`.
-
-```bash
-cd frontent
-python3 -m http.server 8000
-```
-
-Open <http://127.0.0.1:8000/>. A local server is required because the page uses ES modules.
-
-## Backend
-
-Contract: [openapi.yaml](openapi.yaml). Data comes from [backend/db.py](backend/db.py) (mock database).
-
-### Setup and run
+## Run
 
 From this directory (`02-development/`, not `backend/`):
 
@@ -27,11 +12,19 @@ From this directory (`02-development/`, not `backend/`):
 uv sync --group dev && uv run uvicorn backend.main:app --reload --port 8000
 ```
 
-- Health: <http://127.0.0.1:8000/health>
-- Scoreboard: <http://127.0.0.1:8000/api/scoreboard>
+Then open <http://127.0.0.1:8000/>.
+
+- Scoreboard UI: <http://127.0.0.1:8000/>
+- API: <http://127.0.0.1:8000/api/scoreboard>
 - Docs: <http://127.0.0.1:8000/docs>
 
-### Tests
+The page loads standings and matches with `GET /api/scoreboard`. Match details use `GET /api/matches/{id}`.
+
+If you serve the static files on another port, `frontent/js/api.js` falls back to `http://127.0.0.1:8000`.
+
+Contract: [openapi.yaml](openapi.yaml). Data comes from [backend/db.py](backend/db.py) (mock database).
+
+## Tests
 
 ```bash
 uv run pytest

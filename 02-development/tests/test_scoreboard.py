@@ -84,3 +84,10 @@ def test_get_match_unknown_id_returns_404():
     response = client.get("/api/matches/does-not-exist")
     assert response.status_code == 404
     assert "detail" in response.json()
+
+
+def test_frontend_index_is_served():
+    response = client.get("/")
+    assert response.status_code == 200
+    assert "text/html" in response.headers["content-type"]
+    assert "pl_scoreboard" in response.text

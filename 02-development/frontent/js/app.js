@@ -1,4 +1,4 @@
-import { getScoreboard } from "./api.js";
+import { getMatch, getScoreboard } from "./api.js";
 
 const tableBody = document.querySelector("#standings-body");
 const resultsList = document.querySelector("#results-list");
@@ -107,7 +107,7 @@ function matchCard(match) {
       <span class="score">${awayScore}</span>
     </span>
   `;
-  button.addEventListener("click", () => openMatch(match));
+  button.addEventListener("click", () => openMatch(match.id));
   return button;
 }
 
@@ -151,18 +151,24 @@ function renderMatches(matches) {
   renderMatchGroups(fixturesList, upcoming, "No upcoming fixtures this week.");
 }
 
-function openMatch(match) {
-  const finished = match.status === "FINISHED";
-  matchDialogBody.innerHTML = `
-    <p class="eyebrow">${finished ? "Full time" : "Upcoming"}</p>
-    <div class="dialog-score">
-      <p class="dialog-club">${escapeHtml(match.home)}</p>
-      <p class="dialog-nums">${finished ? `${escapeHtml(match.homeScore)}–${escapeHtml(match.awayScore)}` : "vs"}</p>
-      <p class="dialog-club">${escapeHtml(match.away)}</p>
-    </div>
-    <p class="muted">${escapeHtml(formatKickoff(match.utcKickoff))}</p>
-  `;
+async function openMatch(matchId) {
+  matchDialogBody.innerHTML = `<p class="muted">Loading match…</p>`;
   matchDialog.showModal();
+  try {
+    const match = await getMatch(matchId);
+    const finished = match.status === "FINISHED";
+    matchDialogBody.innerHTML = `
+      <p class="eyebrow">${finished ? "Full time" : "Upcoming"}</p>
+      <div class="dialog-score">
+        <p class="dialog-club">${escapeHtml(match.home)}</p>
+        <p class="dialog-nums">${finished ? `${escapeHtml(match.homeScore)}–${escapeHtml(match.awayScore)}` : "vs"}</p>
+        <p class="dialog-club">${escapeHtml(match.away)}</p>
+      </div>
+      <p class="muted">${escapeHtml(formatKickoff(match.utcKickoff))}</p>
+    `;
+  } catch (err) {
+    matchDialogBody.innerHTML = `<p class="banner">${escapeHtml(err instanceof Error ? err.message : "Could not load match.")}</p>`;
+  }
 }
 
 async function loadScoreboard({ force = false } = {}) {

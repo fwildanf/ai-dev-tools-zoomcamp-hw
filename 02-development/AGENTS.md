@@ -8,7 +8,8 @@ Follow [_docs/specs.md](_docs/specs.md). Do not expand the MVP unless the user a
 - Python 3.14+, `uv`, mock in-memory database (replace later)
 - Contract: [openapi.yaml](openapi.yaml)
 - Work only inside `02-development/`
-- Frontend lives in `frontent/`; all backend access goes through `frontent/js/api.js`
+- Frontend lives in `frontent/`; all backend access goes through `frontent/js/api.js` (`GET /api/scoreboard` and `GET /api/matches/{id}`)
+- FastAPI serves the UI from `/` so frontend and API share origin
 
 ## Product
 
